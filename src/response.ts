@@ -14,6 +14,6 @@ export class JsonResponse extends Response {
 			opt.headers['content-type'] = 'application/json';
 		}
 
-		super(JSON.stringify(body), options);
+		super(JSON.stringify(body), opt);
 	}
 }
