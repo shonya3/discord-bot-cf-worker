@@ -11,46 +11,27 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-import { getCuteUrl } from './reddit';
-const DISCORD_PUBLIC_KEY = '6905bc84c7ad6093a46b69f7bb3a33bd30935a6fcb6f76283146b62d3d6562d3';
-import { InteractionResponseType, InteractionType, verifyKey } from 'discord-interactions';
+import { Hono } from 'hono';
+import { InteractionResponseType, InteractionType } from 'discord-interactions';
+import { is_valid_discord_interaction_request, DiscordResponse } from './discord';
 
-export default {
-	async fetch(request, env): Promise<Response> {
-		const { isValid, interaction } = await verify(request, env);
-		if (!isValid || !interaction) {
-			return new Response('Bad request signature.', { status: 401 });
-		}
+const app = new Hono();
 
-		if (interaction.type === InteractionType.PING) {
-			return new Response(
-				JSON.stringify({
-					type: InteractionResponseType.PONG,
-				}),
-				{ headers: 'application/json' }
-			);
-		}
-
-		return new Response(
-			JSON.stringify({
-				type: 4,
-				data: {
-					content: await getCuteUrl(),
-				},
-			}),
-			{ headers: { 'content-type': 'application/json' } }
-		);
-	},
-} satisfies ExportedHandler<Env>;
-
-const verify = async (request: Request, env: Env) => {
-	const signature = request.headers.get('x-signature-ed25519');
-	const timestamp = request.headers.get('x-signature-timestamp');
-	const body = await request.text();
-	const isValidRequest = signature && timestamp && (await verifyKey(body, signature, timestamp, DISCORD_PUBLIC_KEY));
-	if (!isValidRequest) {
-		return { isValid: false };
+app.get('/', () => new Response('Hello, world!!!'));
+app.post('/', async (c) => {
+	const interaction = await is_valid_discord_interaction_request(c.req.raw);
+	if (!interaction) {
+		return new Response('Bad request signature.', { status: 401 });
 	}
 
-	return { interaction: JSON.parse(body), isValid: true };
-};
+	if (interaction.type === InteractionType.PING) {
+		return new DiscordResponse({ type: InteractionResponseType.PONG });
+	}
+
+	return new DiscordResponse({
+		type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+		data: { content: 'placeholder' },
+	});
+});
+
+export default app;
