@@ -1,4 +1,4 @@
-import { AWW_COMMAND } from './commands.js';
+import { PARSE_COMMAND } from './commands.js';
 import dotenv from 'dotenv';
 import process from 'node:process';
 
@@ -32,7 +32,7 @@ const response = await fetch(url, {
 		Authorization: `Bot ${token}`,
 	},
 	method: 'PUT',
-	body: JSON.stringify([AWW_COMMAND]),
+	body: JSON.stringify([PARSE_COMMAND]),
 });
 
 if (response.ok) {
