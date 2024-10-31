@@ -36,8 +36,8 @@ export class DiscordResponse extends JsonResponse {
 }
 
 export class DiscordMessageResponse extends DiscordResponse {
-	constructor(content: string) {
-		super({ type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE, data: { content } });
+	constructor(content: string, options?: { flags?: InteractionResponseFlags }) {
+		super({ type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE, data: { content, flags: options?.flags } });
 	}
 }
 
@@ -67,7 +67,8 @@ export async function fetch_channel_messages({ channel_id, bot_token, limit }: F
 		return await response.json();
 	} catch (err: unknown) {
 		if (err instanceof Error) {
-			throw err.message;
+			err.message = `Error fetching messages ${err.message}`;
+			throw err;
 		} else throw new Error(`Error fetching messages ${err}`);
 	}
 }

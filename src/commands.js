@@ -3,7 +3,7 @@
  * and registration.
  */
 
-export const AWW_COMMAND = {
-	name: 'awwww',
-	description: 'Drop some cuteness on this channel.',
+export const PARSE_COMMAND = {
+	name: 'parse',
+	description: 'Parse comments for reactions or threads',
 };
