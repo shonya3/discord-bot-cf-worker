@@ -1,4 +1,4 @@
-import { verifyKey, InteractionResponseType, InteractionType } from 'discord-interactions';
+import { verifyKey, InteractionResponseType, InteractionType, InteractionResponseFlags } from 'discord-interactions';
 import { JsonResponse } from './response';
 
 const DISCORD_PUBLIC_KEY = '6905bc84c7ad6093a46b69f7bb3a33bd30935a6fcb6f76283146b62d3d6562d3';
@@ -49,6 +49,10 @@ type FetchChannelMessagesArgs = {
 	bot_token: string;
 	limit: number;
 };
+
+export function create_msg_link({ guild_id, channel_id, message_id }: { guild_id: string; channel_id: string; message_id: string }) {
+	return `https://discord.com/channels/${guild_id}/${channel_id}/${message_id}`;
+}
 
 export async function fetch_channel_messages({ channel_id, bot_token, limit }: FetchChannelMessagesArgs): Promise<Array<Message>> {
 	try {
