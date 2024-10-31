@@ -32,6 +32,7 @@ export class DiscordResponse extends JsonResponse {
 		type: InteractionResponseType;
 		data?: {
 			content?: string;
+			flags?: InteractionResponseFlags;
 		};
 	}) {
 		super(obj);
