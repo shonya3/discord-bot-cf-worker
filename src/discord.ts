@@ -1,16 +1,14 @@
 import { verifyKey, InteractionResponseType, InteractionType, InteractionResponseFlags, ChannelTypes } from 'discord-interactions';
 import { JsonResponse } from './response';
 
-const DISCORD_PUBLIC_KEY = '6905bc84c7ad6093a46b69f7bb3a33bd30935a6fcb6f76283146b62d3d6562d3';
-
-export async function is_valid_discord_interaction_request(request: Request): Promise<false | Interaction> {
+export async function is_valid_discord_interaction_request(request: Request, bot_public_key: string): Promise<false | Interaction> {
 	try {
 		const body = await request.text();
 		const is_valid = await verifyKey(
 			body,
 			request.headers.get('x-signature-ed25519') ?? '',
 			request.headers.get('x-signature-timestamp') ?? '',
-			DISCORD_PUBLIC_KEY
+			bot_public_key
 		);
 		if (is_valid) {
 			return JSON.parse(body);

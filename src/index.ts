@@ -19,7 +19,7 @@ const app = new Hono<{ Bindings: Env }>();
 
 app.get('/', async () => new Response('hello!!!'));
 app.post('/', async (c) => {
-	const interaction = await is_valid_discord_interaction_request(c.req.raw);
+	const interaction = await is_valid_discord_interaction_request(c.req.raw, c.env.DISCORD_PUBLIC_KEY);
 	if (!interaction) {
 		return new Response('Bad request signature.', { status: 401 });
 	}
