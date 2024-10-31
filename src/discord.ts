@@ -1,5 +1,27 @@
 import { verifyKey, InteractionResponseType, InteractionType, InteractionResponseFlags, ChannelTypes } from 'discord-interactions';
 import { JsonResponse } from './response';
+import { createMiddleware } from 'hono/factory';
+import { HTTPException } from 'hono/http-exception';
+
+export const validate_interaction_middleware = createMiddleware<{
+	Bindings: Env;
+	Variables: {
+		interaction: Interaction;
+	};
+}>(async (c, next) => {
+	const interaction = await is_valid_discord_interaction_request(c.req.raw, c.env.DISCORD_PUBLIC_KEY);
+	if (!interaction) {
+		throw new HTTPException(401, { message: 'Invalid discord interaction request' });
+	}
+
+	if (interaction.type === InteractionType.PING) {
+		return new DiscordResponse({ type: InteractionResponseType.PONG });
+	}
+
+	c.set('interaction', interaction);
+
+	await next();
+});
 
 export async function is_valid_discord_interaction_request(request: Request, bot_public_key: string): Promise<false | Interaction> {
 	try {

@@ -12,21 +12,15 @@
  */
 
 import { Hono } from 'hono';
-import { InteractionResponseFlags, InteractionResponseType, InteractionType } from 'discord-interactions';
-import { is_valid_discord_interaction_request, DiscordResponse, fetch_channel_messages, create_msg_link } from './discord';
+import { InteractionResponseFlags, InteractionResponseType } from 'discord-interactions';
+import { DiscordResponse, fetch_channel_messages, create_msg_link, validate_interaction_middleware } from './discord';
+import { HTTPException } from 'hono/http-exception';
 
 const app = new Hono<{ Bindings: Env }>();
 
 app.get('/', async () => new Response('hello!!!'));
-app.post('/', async (c) => {
-	const interaction = await is_valid_discord_interaction_request(c.req.raw, c.env.DISCORD_PUBLIC_KEY);
-	if (!interaction) {
-		return new Response('Bad request signature.', { status: 401 });
-	}
-
-	if (interaction.type === InteractionType.PING) {
-		return new DiscordResponse({ type: InteractionResponseType.PONG });
-	}
+app.post('/interaction', validate_interaction_middleware, async (c) => {
+	const interaction = c.var.interaction;
 
 	try {
 		const guild_id = interaction.guild_id;
@@ -56,6 +50,13 @@ app.post('/', async (c) => {
 			data: { content: JSON.stringify(err) },
 		});
 	}
+});
+
+app.onError((err, c) => {
+	if (err instanceof HTTPException) {
+		return err.getResponse();
+	}
+	return c.text('Internal Server Error', 500);
 });
 
 export default app;
