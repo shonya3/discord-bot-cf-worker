@@ -1,13 +1,9 @@
-import { verifyKey, InteractionResponseType, InteractionType, InteractionResponseFlags } from 'discord-interactions';
+import { verifyKey, InteractionResponseType, InteractionType, InteractionResponseFlags, ChannelTypes } from 'discord-interactions';
 import { JsonResponse } from './response';
 
 const DISCORD_PUBLIC_KEY = '6905bc84c7ad6093a46b69f7bb3a33bd30935a6fcb6f76283146b62d3d6562d3';
 
-export type InteractionRequestBody = Record<PropertyKey, unknown> & {
-	type: InteractionType;
-};
-
-export async function is_valid_discord_interaction_request(request: Request): Promise<false | InteractionRequestBody> {
+export async function is_valid_discord_interaction_request(request: Request): Promise<false | Interaction> {
 	try {
 		const body = await request.text();
 		const is_valid = await verifyKey(
@@ -76,7 +72,29 @@ export async function fetch_channel_messages({ channel_id, bot_token, limit }: F
 	}
 }
 
-type Message = {
+export type Interaction = {
+	app_permissions: string;
+	application_id: string;
+	authorizing_integration_owners: Record<PropertyKey, Guild['id']>;
+	channel: Channel;
+	channel_id: Channel['id'];
+	context: number;
+	data: {
+		id: string;
+		name: string;
+	};
+	entitlement_sku_ds: Array<unknown>;
+	entitlements: Array<unknown>;
+	guild: Guild;
+	guild_id: Guild['id'];
+	guild_locale: string;
+	id: string;
+	locale: string;
+	type: InteractionType;
+	member: Member;
+};
+
+export type Message = {
 	type: number;
 	content: string;
 	mentions: Array<Mention>;
@@ -96,7 +114,7 @@ type Message = {
 	reactions?: Array<Reaction>;
 };
 
-type Thread = {
+export type Thread = {
 	/**
 	 * The id of the parent message.
 	 */
@@ -121,7 +139,7 @@ type Thread = {
 	};
 };
 
-type Mention = {
+export type Mention = {
 	id: string;
 	username: string;
 	avatar: string | null;
@@ -135,7 +153,7 @@ type Mention = {
 	clan: string | null;
 };
 
-type Author = {
+export type Author = {
 	id: string;
 	username: string;
 	avatar: string;
@@ -149,7 +167,7 @@ type Author = {
 	banner_color: string | null;
 	clan: string | null;
 };
-type Reaction = {
+export type Reaction = {
 	emoji: Emoji;
 	count: number;
 	count_details: { burst: number; normal: number };
@@ -160,7 +178,45 @@ type Reaction = {
 	burst_count: number;
 };
 
-type Emoji = {
+export type Emoji = {
 	id: string;
 	name: string;
+};
+
+export type Guild = {
+	features: Array<unknown>;
+	id: string;
+	locale: string;
+};
+
+export type Channel = {
+	flags: number;
+	guild_id: Guild['id'];
+	id: string;
+	last_message_id: string;
+	name: string;
+	nsfw: boolean;
+	parent_id: string;
+	permissions: string;
+	position: number;
+	rate_limit_per_user: number;
+	topic: null | unknown;
+	type: ChannelTypes;
+};
+
+export type Member = {
+	avatar: null | unknown;
+	banner: null | unknown;
+	communication_disabled_until: null | unknown;
+	deaf: boolean;
+	flags: number;
+	joined_at: string;
+	mute: boolean;
+	nick: null | unknown;
+	pending: boolean;
+	permissions: string;
+	premium_since: null | string;
+	roles: Array<unknown>;
+	unusual_dm_activity_until: null | unknown;
+	user: Author;
 };
