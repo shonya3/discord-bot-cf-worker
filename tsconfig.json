@@ -40,7 +40,7 @@
 
 		/* JavaScript Support */
 		"allowJs": true /* Allow JavaScript files to be a part of your program. Use the `checkJS` option to get errors from these files. */,
-		"checkJs": false /* Enable error reporting in type-checked JavaScript files. */,
+		"checkJs": true /* Enable error reporting in type-checked JavaScript files. */,
 		// "maxNodeModuleJsDepth": 1,                        /* Specify the maximum folder depth used for checking JavaScript files from `node_modules`. Only applicable with `allowJs`. */
 
 		/* Emit */
@@ -101,5 +101,5 @@
 		"skipLibCheck": true /* Skip type checking all .d.ts files. */
 	},
 	"exclude": ["test"],
-	"include": ["worker-configuration.d.ts", "src/**/*.ts"]
+	"include": ["worker-configuration.d.ts", "src/**/*.ts", "src/register.js", "src/commands.js"]
 }

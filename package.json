@@ -1,6 +1,7 @@
 {
-	"name": "my-first-worker",
+	"name": "cf-workers-bot",
 	"version": "0.0.0",
+	"type": "module",
 	"private": true,
 	"scripts": {
 		"deploy": "wrangler deploy",
