@@ -14,7 +14,7 @@
 
 ```
 git clone https://github.com/shonya3/discord-bot-cf-worker.git
-cd cloudflare-discord-bot-starter
+cd discord-bot-cf-worker
 ```
 
 ### 2. Install Dependencies
