@@ -1,16 +1,4 @@
-# Cloudflare Discord Bot Starter
-
-## Overview
-
-A serverless Discord bot template built on Cloudflare Workers. Deploy a bot globally on Cloudflare's edge network with minimal setup.
-
-## Features
-
-- ⚡ Serverless architecture (no servers to manage)
-- 🌍 Global low-latency via Cloudflare's network
-- 🤖 Built-in Discord interaction handling
-- 🔒 Environment-based configuration
-- 📦 Wrangler deployment ready
+# Cloudflare Discord Bot
 
 ## Prerequisites
 
