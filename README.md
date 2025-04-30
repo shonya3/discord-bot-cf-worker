@@ -121,7 +121,7 @@ https://your-bot-name.your-subdomain.workers.dev/interactions
   - Paste your production URL with /interactions
   - Click "Save"
 
-## ## Adding Commands
+## Adding Commands
 
 ### 1. Create a New Command
 
