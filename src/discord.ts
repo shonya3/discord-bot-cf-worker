@@ -43,6 +43,23 @@ export async function is_valid_discord_interaction_request(request: Request, bot
 	}
 }
 
+export function reply(content: string | { content: string; ephemeral?: boolean }): DiscordResponse {
+	if (typeof content === 'string') {
+		return new DiscordResponse({
+			type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+			data: { content },
+		});
+	}
+
+	return new DiscordResponse({
+		type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+		data: {
+			content: content.content,
+			flags: content.ephemeral ? InteractionResponseFlags.EPHEMERAL : undefined,
+		},
+	});
+}
+
 export class DiscordResponse extends JsonResponse {
 	constructor(obj: {
 		type: InteractionResponseType;
@@ -52,12 +69,6 @@ export class DiscordResponse extends JsonResponse {
 		};
 	}) {
 		super(obj);
-	}
-}
-
-export class DiscordMessageResponse extends DiscordResponse {
-	constructor(content: string, options?: { flags?: InteractionResponseFlags }) {
-		super({ type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE, data: { content, flags: options?.flags } });
 	}
 }
 

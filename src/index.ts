@@ -13,14 +13,14 @@
 
 import { Hono } from 'hono';
 import { InteractionResponseFlags, InteractionResponseType } from 'discord-interactions';
-import { DiscordResponse, fetch_channel_messages, create_msg_link, validate_interaction_middleware } from './discord';
+import { DiscordResponse, fetch_channel_messages, create_msg_link, validate_interaction_middleware, reply } from './discord';
 import { HTTPException } from 'hono/http-exception';
 
 const app = new Hono<{ Bindings: Env }>();
 
 app.get('/', async () => new Response('hello!!!'));
 app.post('/interaction', validate_interaction_middleware, async (c) => {
-	const interaction = c.var.interaction;
+	const { interaction } = c.var;
 
 	try {
 		const guild_id = interaction.guild_id;
@@ -40,15 +40,9 @@ app.post('/interaction', validate_interaction_middleware, async (c) => {
 			.map((msg) => create_msg_link({ guild_id, channel_id, message_id: msg.id }))
 			.join('\n');
 
-		return new DiscordResponse({
-			type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-			data: { content: filtered_messages, flags: InteractionResponseFlags.EPHEMERAL },
-		});
+		return reply({ content: filtered_messages, ephemeral: true });
 	} catch (err) {
-		return new DiscordResponse({
-			type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-			data: { content: JSON.stringify(err) },
-		});
+		return reply(JSON.stringify(err));
 	}
 });
 
