@@ -46,7 +46,7 @@ DISCORD_TOKEN=
 3. Run:
 
 ```
-pnpm ngrok config add-authtoken your-auth-token-here
+pnpm exec ngrok config add-authtoken your-auth-token-here
 ```
 
 ### 5. Authenticate Wrangler
