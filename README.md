@@ -120,3 +120,38 @@ https://your-bot-name.your-subdomain.workers.dev/interactions
 - In "General Information" → "Interactions Endpoint URL":
   - Paste your production URL with /interactions
   - Click "Save"
+
+## ## Adding Commands
+
+### 1. Create a New Command
+
+1. Add your command definition in `src/commands.ts`:
+
+```ts
+export const commands = {
+	// ...existing commands
+	your_command: {
+		name: 'your_command',
+		description: 'Your command description',
+	},
+} as const;
+```
+
+2. Implement the command handler in your interaction handler
+
+### 2. Register Commands with Discord
+
+After adding new commands, register them with Discord's API:
+
+```
+pnpm run commands
+```
+
+This runs the command registration script which:
+
+- Pushes your command definitions to Discord
+- Updates the command list in all servers where your bot is installed
+
+❗ **Note**:
+
+- Command updates may take up to 1 hour to propagate globally
