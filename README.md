@@ -99,7 +99,7 @@ https://5053-185-107-80-116.ngrok-free.app/interactions
    Using pnpm:
 
 ```
-pnpm run deploy
+pnpm wrangler deploy
 ```
 
 2. After successful deployment, Wrangler will output your production URL:

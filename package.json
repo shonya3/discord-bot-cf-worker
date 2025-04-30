@@ -5,7 +5,6 @@
 	"private": true,
 	"scripts": {
 		"commands": "tsx src/commands-register.ts",
-		"deploy": "wrangler deploy",
 		"ngrok": "ngrok http 8787",
 		"dev": "wrangler dev",
 		"start": "wrangler dev",
