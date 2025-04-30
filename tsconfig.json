@@ -102,5 +102,5 @@
 		"skipLibCheck": true /* Skip type checking all .d.ts files. */
 	},
 	"exclude": ["test"],
-	"include": ["worker-configuration.d.ts", "src/**/*.ts", "src/register.js", "src/commands.js"]
+	"include": ["worker-configuration.d.ts", "src/**/*.ts", "src/register.ts", "src/commands.ts"]
 }
