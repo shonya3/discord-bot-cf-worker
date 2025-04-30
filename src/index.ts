@@ -29,6 +29,10 @@ app.post('/interaction', validate_interaction_middleware, async (c) => {
 			case 'parse':
 				return await handle_parse_command({ bot_token: c.env.DISCORD_TOKEN, guild_id, channel_id });
 
+			case 'hello': {
+				return reply('Hello');
+			}
+
 			default:
 				return reply(`Unknown command: ${interaction.data.name}`);
 		}

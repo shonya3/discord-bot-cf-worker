@@ -36,9 +36,12 @@ const response = await fetch(url, {
 });
 
 if (response.ok) {
-	console.log('Registered all commands');
-	const data = await response.json();
-	console.log(JSON.stringify(data, null, 2));
+	await response.json();
+	console.log(
+		`Registered all commands: ${Object.values(commands)
+			.map((c) => c.name)
+			.join(', ')}`
+	);
 } else {
 	console.error('Error registering commands');
 	let errorText = `Error registering commands \n ${response.url}: ${response.status} ${response.statusText}`;

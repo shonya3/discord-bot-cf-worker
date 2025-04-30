@@ -8,6 +8,10 @@ export const commands = {
 		name: 'parse',
 		description: 'Parse comments for reactions or threads',
 	},
+	hello: {
+		name: 'hello',
+		description: 'replies hello',
+	},
 } as const;
 
 export type CommandName = (typeof commands)[keyof typeof commands]['name'];
