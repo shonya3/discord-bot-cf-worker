@@ -104,17 +104,13 @@ export async function fetch_channel_messages({ channel_id, bot_token, limit }: F
 	}
 }
 
-export type Interaction = {
+type CommonInteractionFields = {
 	app_permissions: string;
 	application_id: string;
 	authorizing_integration_owners: Record<PropertyKey, Guild['id']>;
 	channel: Channel;
 	channel_id: Channel['id'];
 	context: number;
-	data: {
-		id: string;
-		name: string;
-	};
 	entitlement_sku_ds: Array<unknown>;
 	entitlements: Array<unknown>;
 	guild: Guild;
@@ -122,9 +118,31 @@ export type Interaction = {
 	guild_locale: string;
 	id: string;
 	locale: string;
-	type: InteractionType;
 	member: Member;
 };
+
+export type AnotherInteraction = CommonInteractionFields & {
+	type: InteractionType.APPLICATION_COMMAND_AUTOCOMPLETE | InteractionType.MODAL_SUBMIT | InteractionType.PING;
+};
+
+export type ComponentInteraction = CommonInteractionFields & {
+	type: InteractionType.MESSAGE_COMPONENT;
+	data: {
+		component_type: 2;
+		custom_id: string;
+		id: number;
+	};
+};
+
+export type CommandInteraction = CommonInteractionFields & {
+	type: InteractionType.APPLICATION_COMMAND;
+	data: {
+		id: number;
+		name: string;
+	};
+};
+
+export type Interaction = ComponentInteraction | CommandInteraction | AnotherInteraction;
 
 export type Message = {
 	type: number;
