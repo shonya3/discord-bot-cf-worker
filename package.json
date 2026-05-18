@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "commands": "tsx src/commands-register.ts",
+    "update-url": "tsx src/update-interactions-url.ts",
     "dev": "wrangler dev",
     "tunnel": "wrangler dev --tunnel",
     "cf-typegen": "wrangler types",
