@@ -8,6 +8,7 @@
     "dev": "wrangler dev",
     "tunnel": "wrangler dev --tunnel",
     "cf-typegen": "wrangler types",
+    "check": "tsc --noEmit",
     "fmt": "oxfmt"
   },
   "dependencies": {

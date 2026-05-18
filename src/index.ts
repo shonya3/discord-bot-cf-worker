@@ -6,6 +6,7 @@ import {
   reply,
 } from "./discord.js";
 import { HTTPException } from "hono/http-exception";
+import { InteractionType } from "discord-interactions";
 import { type CommandName } from "./commands.js";
 
 const app = new Hono<{ Bindings: Env }>();
@@ -13,6 +14,11 @@ const app = new Hono<{ Bindings: Env }>();
 app.get("/", async () => new Response("hello!!!"));
 app.post("/interaction", validate_interaction_middleware, async (c) => {
   const { interaction } = c.var;
+
+  if (interaction.type !== InteractionType.APPLICATION_COMMAND) {
+    return reply("Unsupported interaction type");
+  }
+
   const { guild_id, channel_id } = interaction;
 
   try {
