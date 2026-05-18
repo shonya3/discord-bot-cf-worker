@@ -5,13 +5,13 @@
   "type": "module",
   "scripts": {
     "commands": "tsx src/commands-register.ts",
-    "ngrok": "ngrok http 8787",
     "dev": "wrangler dev",
+    "tunnel": "wrangler dev --tunnel",
     "cf-typegen": "wrangler types",
     "fmt": "oxfmt"
   },
   "dependencies": {
-    "dotenv": "16.5.0",
+    "dotenv": "^17.4",
     "hono": "4.12.19"
   },
   "devDependencies": {

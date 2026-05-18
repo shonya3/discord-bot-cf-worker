@@ -6,7 +6,6 @@
 - [Node.js](https://nodejs.org/)
 - [pnpm](https://pnpm.io/installation)
 - [Discord Developer Portal](https://discord.com/developers/applications) access
-- [ngrok account](https://dashboard.ngrok.com/signup) (for local development)
 
 ## Quick Start
 
@@ -23,15 +22,15 @@ cd discord-bot-cf-worker
 pnpm install
 ```
 
-### 3. Configure Envinronment
+### 3. Configure Environment
 
 1. Copy the example environment file:
 
 ```
-cp .dev.vars.example .dev.vars
+cp .env.example .env
 ```
 
-2. Update .dev.vars with your credentials:
+2. Update `.env` with your credentials:
 
 ```
 DISCORD_APPLICATION_ID=
@@ -39,17 +38,7 @@ DISCORD_PUBLIC_KEY=
 DISCORD_TOKEN=
 ```
 
-### 4. Authenticate ngrok
-
-1. Sign up at [ngrok](https://dashboard.ngrok.com/signup)
-2. Get your authtoken from the dashboard
-3. Run:
-
-```
-pnpm exec ngrok config add-authtoken your-auth-token-here
-```
-
-### 5. Authenticate Wrangler
+### 4. Authenticate Wrangler
 
 ```
 npx wrangler login
@@ -57,40 +46,33 @@ npx wrangler login
 
 ## Development Workflow
 
-### 1. Start Local Server
-
-In your first terminal:
+### 1. Start Local Server with Tunnel
 
 ```
-pnpm run dev
+pnpm run tunnel
 ```
 
-### 2. Start ngrok Tunnel
-
-In a second terminal:
+This starts the local dev server and creates a public Cloudflare Tunnel (no ngrok needed):
 
 ```
-pnpm run ngrok
+⬣ Sharing via Cloudflare Tunnel: https://some-string.trycloudflare.com/
 ```
 
-After starting, ngrok will display a forwarding URL like:
-Forwarding https://5053-185-107-80-116.ngrok-free.app -> http://localhost:8787
+### 2. Configure Discord Interactions Endpoint
 
-### 3. Configure Discord Interactions Endpoint
-
-1. Take your ngrok URL and append /interactions:
+1. Take your tunnel URL and append `/interactions`:
 
 ```
-https://5053-185-107-80-116.ngrok-free.app/interactions
+https://some-string.trycloudflare.com/interactions
 ```
 
 2. Go to your [Discord Application Settings](https://discord.com/developers/applications)
 3. In "General Information" → "Interactions Endpoint URL":
 
-- Paste your ngrok URL with /interactions
+- Paste your tunnel URL with `/interactions`
 - Click "Save"
 
-❗ **Important**: Your local server (`pnpm dev`) must be running when saving the URL, as Discord will immediately send a verification ping.
+❗ **Important**: The tunnel must be running when saving the URL, as Discord will immediately send a verification ping.
 
 ## Deployment
 
