@@ -129,11 +129,11 @@ https://your-bot-name.your-subdomain.workers.dev/interactions
 
 ```ts
 export const commands = {
-	// ...existing commands
-	your_command: {
-		name: 'your_command',
-		description: 'Your command description',
-	},
+  // ...existing commands
+  your_command: {
+    name: "your_command",
+    description: "Your command description",
+  },
 } as const;
 ```
 

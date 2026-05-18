@@ -1,6 +1,6 @@
-import { commands } from './commands';
-import dotenv from 'dotenv';
-import process from 'node:process';
+import { commands } from "./commands";
+import dotenv from "dotenv";
+import process from "node:process";
 
 /**
  * This file is meant to be run from the command line, and is not used by the
@@ -8,16 +8,16 @@ import process from 'node:process';
  * to be run once.
  */
 
-dotenv.config({ path: '.dev.vars' });
+dotenv.config({ path: ".dev.vars" });
 
 const token = process.env.DISCORD_TOKEN;
 const applicationId = process.env.DISCORD_APPLICATION_ID;
 
 if (!token) {
-	throw new Error('The DISCORD_TOKEN environment variable is required.');
+  throw new Error("The DISCORD_TOKEN environment variable is required.");
 }
 if (!applicationId) {
-	throw new Error('The DISCORD_APPLICATION_ID environment variable is required.');
+  throw new Error("The DISCORD_APPLICATION_ID environment variable is required.");
 }
 
 /**
@@ -27,31 +27,31 @@ if (!applicationId) {
 const url = `https://discord.com/api/v10/applications/${applicationId}/commands`;
 
 const response = await fetch(url, {
-	headers: {
-		'Content-Type': 'application/json',
-		Authorization: `Bot ${token}`,
-	},
-	method: 'PUT',
-	body: JSON.stringify(Object.values(commands)),
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bot ${token}`,
+  },
+  method: "PUT",
+  body: JSON.stringify(Object.values(commands)),
 });
 
 if (response.ok) {
-	await response.json();
-	console.log(
-		`Registered all commands: ${Object.values(commands)
-			.map((c) => c.name)
-			.join(', ')}`
-	);
+  await response.json();
+  console.log(
+    `Registered all commands: ${Object.values(commands)
+      .map((c) => c.name)
+      .join(", ")}`,
+  );
 } else {
-	console.error('Error registering commands');
-	let errorText = `Error registering commands \n ${response.url}: ${response.status} ${response.statusText}`;
-	try {
-		const error = await response.text();
-		if (error) {
-			errorText = `${errorText} \n\n ${error}`;
-		}
-	} catch (err) {
-		console.error('Error reading body from request:', err);
-	}
-	console.error(errorText);
+  console.error("Error registering commands");
+  let errorText = `Error registering commands \n ${response.url}: ${response.status} ${response.statusText}`;
+  try {
+    const error = await response.text();
+    if (error) {
+      errorText = `${errorText} \n\n ${error}`;
+    }
+  } catch (err) {
+    console.error("Error reading body from request:", err);
+  }
+  console.error(errorText);
 }
