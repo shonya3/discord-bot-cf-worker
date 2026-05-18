@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       dotenv:
-        specifier: 16.5.0
-        version: 16.5.0
+        specifier: ^17.4
+        version: 17.4.2
       hono:
         specifier: 4.12.19
         version: 4.12.19
@@ -1078,8 +1078,8 @@ packages:
     resolution: {integrity: sha512-jjJx8iwAeJcj8oEauV43fue9lNqkf38fy60aSs2+G8D1nJmDxUIrk08o3h0F3wgwuBWWJUZO+X/VgfXsxpCiJA==}
     engines: {node: '>=18.4.0'}
 
-  dotenv@16.5.0:
-    resolution: {integrity: sha512-m/C+AwOAr9/W1UOIZUo232ejMNnJAJtYQjUbHoNTBNTJSvqzzDh7vnrei3o3r3m9blf6ZoDkvcw0VmozNRFJxg==}
+  dotenv@17.4.2:
+    resolution: {integrity: sha512-nI4U3TottKAcAD9LLud4Cb7b2QztQMUEfHbvhTH09bqXTxnSie8WnjPALV/WMCrJZ6UV/qHJ6L03OqO3LcdYZw==}
     engines: {node: '>=12'}
 
   end-of-stream@1.4.4:
@@ -2083,7 +2083,7 @@ snapshots:
 
   discord-interactions@4.4.0: {}
 
-  dotenv@16.5.0: {}
+  dotenv@17.4.2: {}
 
   end-of-stream@1.4.4:
     dependencies:
