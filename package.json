@@ -7,8 +7,6 @@
     "commands": "tsx src/commands-register.ts",
     "ngrok": "ngrok http 8787",
     "dev": "wrangler dev",
-    "start": "wrangler dev",
-    "test": "vitest",
     "cf-typegen": "wrangler types",
     "fmt": "oxfmt"
   },
@@ -21,7 +19,7 @@
     "ngrok": "^5.0.0-beta.2",
     "oxfmt": "^0.50.0",
     "tsx": "^4.22.2",
-    "typescript": "^5.8.3",
+    "typescript": "^6.0",
     "vitest": "^4.1",
     "wrangler": "4.92.0"
   }

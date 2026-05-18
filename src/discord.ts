@@ -5,7 +5,7 @@ import {
   InteractionResponseFlags,
   ChannelTypes,
 } from "discord-interactions";
-import { JsonResponse } from "./response";
+import { JsonResponse } from "./response.js";
 import { createMiddleware } from "hono/factory";
 import { HTTPException } from "hono/http-exception";
 
@@ -77,7 +77,7 @@ export class DiscordResponse extends JsonResponse {
     type: InteractionResponseType;
     data?: {
       content?: string;
-      flags?: InteractionResponseFlags;
+      flags?: InteractionResponseFlags | undefined;
     };
   }) {
     super(obj);

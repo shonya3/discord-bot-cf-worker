@@ -4,9 +4,9 @@ import {
   create_msg_link,
   validate_interaction_middleware,
   reply,
-} from "./discord";
+} from "./discord.js";
 import { HTTPException } from "hono/http-exception";
-import { CommandName } from "./commands";
+import { type CommandName } from "./commands.js";
 
 const app = new Hono<{ Bindings: Env }>();
 
