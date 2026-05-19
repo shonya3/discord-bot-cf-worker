@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "nodenext",
+    "target": "esnext",
+    "lib": ["esnext"],
+    "types": [],
+
+    "strict": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "moduleDetection": "force",
+    "noUncheckedIndexedAccess": true,
+
+    "sourceMap": true
+  },
+  "include": [
+    "worker-configuration.d.ts",
+    "src"
+  ]
+}

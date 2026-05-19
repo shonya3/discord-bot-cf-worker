@@ -4,12 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "commands": "tsx src/commands-register.ts",
-    "update-url": "tsx src/update-interactions-url.ts",
-    "dev": "tsx src/start.ts",
-    "deploy": "tsx src/deploy.ts",
+    "commands": "tsx scripts/commands-register.ts",
+    "update-url": "tsx scripts/update-interactions-url.ts",
+    "dev": "tsx scripts/start.ts",
+    "deploy": "tsx scripts/deploy.ts",
     "cf-typegen": "wrangler types",
-    "check": "tsc --noEmit",
+    "check": "tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.scripts.json --noEmit",
     "fmt": "oxfmt"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "hono": "4.12.19"
   },
   "devDependencies": {
+    "@types/node": "^25.8.0",
     "discord-interactions": "^4.4",
     "ngrok": "^5.0.0-beta.2",
     "oxfmt": "^0.50.0",
