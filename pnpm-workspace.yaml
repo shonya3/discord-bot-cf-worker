@@ -1,5 +1,4 @@
 allowBuilds:
   esbuild: true
-  ngrok: true
   sharp: true
   workerd: true

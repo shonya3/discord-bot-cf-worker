@@ -19,9 +19,8 @@
   "devDependencies": {
     "@types/node": "^25.8.0",
     "discord-interactions": "^4.4",
-    "ngrok": "^5.0.0-beta.2",
     "oxfmt": "^0.50.0",
-    "tsx": "^4.22.2",
+    "tsx": "^4.21",
     "typescript": "^6.0",
     "vitest": "^4.1",
     "wrangler": "4.92.0"
