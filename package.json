@@ -7,6 +7,7 @@
     "commands": "tsx src/commands-register.ts",
     "update-url": "tsx src/update-interactions-url.ts",
     "dev": "tsx src/start.ts",
+    "deploy": "tsx src/deploy.ts",
     "cf-typegen": "wrangler types",
     "check": "tsc --noEmit",
     "fmt": "oxfmt"

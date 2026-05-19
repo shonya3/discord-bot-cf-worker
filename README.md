@@ -56,32 +56,29 @@ The tunnel URL is automatically detected and the Discord interactions endpoint i
 
 ## Deployment
 
-1. Deploy to production:
+Deploy to production, including secrets and Discord endpoint update:
 
-   Using pnpm:
+```
+pnpm run deploy
+```
+
+The script will prompt you to:
+
+1. Deploy secrets from `.env` to production via `wrangler secret bulk`
+2. Run `wrangler deploy`
+3. Auto-detect the production URL and update the Discord interactions endpoint
+
+Alternatively, deploy manually:
 
 ```
 pnpm wrangler deploy
 ```
 
-2. After successful deployment, Wrangler will output your production URL:
+Then update the Discord endpoint to your production URL:
 
 ```
-https://your-bot-name.your-subdomain.workers.dev
+pnpm run update-url https://your-bot-name.your-subdomain.workers.dev/interaction
 ```
-
-3. Update Discord Interactions Endpoint:
-
-- Take your production URL and append /interactions:
-
-```
-https://your-bot-name.your-subdomain.workers.dev/interactions
-```
-
-- Go to your [Discord Application Settings](https://discord.com/developers/applications)
-- In "General Information" → "Interactions Endpoint URL":
-  - Paste your production URL with /interactions
-  - Click "Save"
 
 ## Adding Commands
 
