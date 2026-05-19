@@ -12,7 +12,8 @@
     "moduleDetection": "force",
     "noUncheckedIndexedAccess": true,
 
-    "sourceMap": true
+    "sourceMap": true,
+    "noEmit": true
   },
   "include": [
     "worker-configuration.d.ts",

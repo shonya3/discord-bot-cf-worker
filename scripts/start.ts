@@ -34,9 +34,20 @@ async function updateWithRetry(url: string, retries = 10, delayMs = 5000): Promi
   throw new Error(`Failed to update Discord endpoint after ${retries} attempts`);
 }
 
-const wrangler = spawn("script", ["-q", "-c", "pnpm wrangler dev --tunnel"], {
-  stdio: ["inherit", "pipe", "pipe"],
-});
+function filterEpipe(chunk: Buffer): boolean {
+  const text = chunk.toString();
+  return text.includes("write EPIPE") || text.includes("Error: write");
+}
+
+const isWin = process.platform === "win32";
+
+const wrangler = isWin
+  ? spawn("cmd.exe", ["/c", "pnpm", "wrangler", "dev", "--tunnel"], {
+      stdio: ["inherit", "pipe", "pipe"],
+    })
+  : spawn("script", ["-q", "-c", "pnpm wrangler dev --tunnel", "/dev/null"], {
+      stdio: ["inherit", "pipe", "pipe"],
+    });
 
 wrangler.stdout.on("data", (chunk: Buffer) => {
   const text = chunk.toString();
@@ -74,9 +85,8 @@ wrangler.stdout.on("data", (chunk: Buffer) => {
 wrangler.stdout.on("error", () => {});
 
 wrangler.stderr.on("data", (chunk: Buffer) => {
-  const text = chunk.toString();
-  if (text.includes("write EPIPE") || text.includes("Error: write")) return;
-  process.stderr.write(text);
+  if (filterEpipe(chunk)) return;
+  process.stderr.write(chunk.toString());
 });
 
 wrangler.stderr.on("error", () => {});
