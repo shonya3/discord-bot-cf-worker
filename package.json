@@ -6,7 +6,7 @@
   "scripts": {
     "commands": "tsx scripts/commands-register.ts",
     "update-url": "tsx scripts/update-interactions-url.ts",
-    "dev": "tsx scripts/start.ts",
+    "dev": "tsx scripts/dev.ts",
     "deploy": "tsx scripts/deploy.ts",
     "cf-typegen": "wrangler types",
     "check": "tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.scripts.json --noEmit",
