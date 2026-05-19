@@ -46,33 +46,13 @@ npx wrangler login
 
 ## Development Workflow
 
-### 1. Start Local Server with Tunnel
+Start the local dev server with a public Cloudflare Tunnel (no ngrok needed):
 
 ```
-pnpm run tunnel
+pnpm run dev
 ```
 
-This starts the local dev server and creates a public Cloudflare Tunnel (no ngrok needed):
-
-```
-⬣ Sharing via Cloudflare Tunnel: https://some-string.trycloudflare.com/
-```
-
-### 2. Configure Discord Interactions Endpoint
-
-1. Take your tunnel URL and append `/interactions`:
-
-```
-https://some-string.trycloudflare.com/interactions
-```
-
-2. Go to your [Discord Application Settings](https://discord.com/developers/applications)
-3. In "General Information" → "Interactions Endpoint URL":
-
-- Paste your tunnel URL with `/interactions`
-- Click "Save"
-
-❗ **Important**: The tunnel must be running when saving the URL, as Discord will immediately send a verification ping.
+The tunnel URL is automatically detected and the Discord interactions endpoint is updated for you. Discord verifies the endpoint by sending a test ping, then your bot is ready to receive commands.
 
 ## Deployment
 
