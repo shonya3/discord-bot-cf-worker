@@ -3,6 +3,7 @@ import process from "node:process";
 import readline from "node:readline/promises";
 import dotenv from "dotenv";
 import { updateInteractionsUrl } from "./update-interactions-url.js";
+import { registerCommands } from "./utils/register-commands.js";
 
 dotenv.config({ path: ".env" });
 
@@ -69,13 +70,13 @@ wrangler.on("exit", async (code) => {
     const url = deployUrl.replace(/\/?$/, "/interaction");
     console.log("\nWaiting for deployment to propagate...\n");
     await waitForEndpoint(deployUrl);
-    console.log(`Updating Discord interactions endpoint to ${url}...\n`);
     try {
       await updateInteractionsUrl(url);
     } catch (err: unknown) {
       console.error("Failed to update Discord endpoint:", err instanceof Error ? err.message : err);
-      process.exit(1);
     }
+    console.log("Registering commands...\n");
+    await registerCommands();
   } else {
     console.error("\nCould not detect deployment URL from wrangler output.");
     process.exit(1);

@@ -98,19 +98,4 @@ export const commands = {
 
 2. Implement the command handler in your interaction handler
 
-### 2. Register Commands with Discord
-
-After adding new commands, register them with Discord's API:
-
-```
-pnpm run commands
-```
-
-This runs the command registration script which:
-
-- Pushes your command definitions to Discord
-- Updates the command list in all servers where your bot is installed
-
-❗ **Note**:
-
-- Command updates may take up to 1 hour to propagate globally
+Commands are auto-registered on every `pnpm run dev` and `pnpm run deploy`.

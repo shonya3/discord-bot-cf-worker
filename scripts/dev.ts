@@ -2,6 +2,7 @@ import { spawn } from "node:child_process";
 import process from "node:process";
 import dotenv from "dotenv";
 import { updateInteractionsUrl } from "./update-interactions-url.js";
+import { registerCommands } from "./utils/register-commands.js";
 
 dotenv.config({ path: ".env" });
 
@@ -68,15 +69,17 @@ wrangler.stdout.on("data", (chunk: Buffer) => {
 
       console.log("Waiting for tunnel URL DNS propagation (takes 5-60 sec)...\n");
       waitForTunnel(tunnelUrl)
-        .then(() => {
-          console.log(`Auto-updating Discord interactions endpoint to ${url}...\n`);
-          return updateWithRetry(url);
-        })
-        .catch((err: unknown) => {
-          console.error(
-            "Failed to auto-update Discord endpoint:",
-            err instanceof Error ? err.message : err,
-          );
+        .then(async () => {
+          try {
+            await updateWithRetry(url);
+          } catch (err: unknown) {
+            console.error(
+              "Failed to auto-update Discord endpoint:",
+              err instanceof Error ? err.message : err,
+            );
+          }
+          console.log("Registering commands...\n");
+          await registerCommands();
         });
     }
   }
